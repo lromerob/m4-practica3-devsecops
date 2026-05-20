@@ -2,8 +2,11 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# NUEVO: Actualizar los paquetes del sistema operativo para mitigar vulnerabilidades HIGH
+# 1. Actualizar sistema operativo 
 RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+
+# 2. NUEVO: Forzar la actualización de las herramientas internas de Python para corregir sus vulnerabilidades HIGH
+RUN pip install --no-cache-dir --upgrade pip wheel setuptools jaraco.context
 
 COPY requirements.txt ./
 
