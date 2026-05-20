@@ -21,13 +21,13 @@ jobs:
       with:
         context: .
         push: false
+        load: true # ← Esto carga la imagen en el Docker local para que Trivy la vea
         tags: lromerob/app-flask:latest
 
-    # NUEVO PASO: Escaneo de seguridad con Trivy
     - name: Escanear Imagen con Trivy
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: 'lromerob/app-flask:latest'
         format: 'table'
-        exit-code: '0' # Ponemos 0 para que no rompa el pipeline si encuentra fallos, así podemos ver el reporte completo primero
+        exit-code: '0'
         severity: 'CRITICAL,HIGH'
